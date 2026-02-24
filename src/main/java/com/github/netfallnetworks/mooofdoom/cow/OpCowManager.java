@@ -2,6 +2,7 @@ package com.github.netfallnetworks.mooofdoom.cow;
 
 import com.github.netfallnetworks.mooofdoom.ModConfig;
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
+import com.github.netfallnetworks.mooofdoom.cow.combat.ChargeGoal;
 import com.github.netfallnetworks.mooofdoom.cow.combat.HostileTargetGoal;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -51,6 +52,10 @@ public class OpCowManager {
 
     public static void addCombatGoals(Cow cow) {
         cow.targetSelector.addGoal(1, new HostileTargetGoal(cow));
+
+        if (ModConfig.CHARGE_ATTACK_ENABLED.getAsBoolean()) {
+            cow.goalSelector.addGoal(2, new ChargeGoal(cow));
+        }
     }
 
     @SubscribeEvent
