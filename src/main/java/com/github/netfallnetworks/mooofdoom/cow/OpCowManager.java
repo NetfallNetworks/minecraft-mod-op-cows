@@ -4,12 +4,15 @@ import com.github.netfallnetworks.mooofdoom.ModConfig;
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
 import com.github.netfallnetworks.mooofdoom.cow.combat.ChargeGoal;
 import com.github.netfallnetworks.mooofdoom.cow.combat.HostileTargetGoal;
+import com.github.netfallnetworks.mooofdoom.cow.combat.MilkProjectileGoal;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.cow.Cow;
+import net.minecraft.tags.DamageTypeTags;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public class OpCowManager {
 
@@ -56,6 +59,10 @@ public class OpCowManager {
         if (ModConfig.CHARGE_ATTACK_ENABLED.getAsBoolean()) {
             cow.goalSelector.addGoal(2, new ChargeGoal(cow));
         }
+
+        if (ModConfig.MILK_PROJECTILE_ENABLED.getAsBoolean()) {
+            cow.goalSelector.addGoal(3, new MilkProjectileGoal(cow));
+        }
     }
 
     @SubscribeEvent
@@ -84,6 +91,23 @@ public class OpCowManager {
             case ITEM_ACTIVATED -> {
                 // Handled by Doom Apple use, not here
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLivingDamage(LivingIncomingDamageEvent event) {
+        if (!(event.getEntity() instanceof Cow cow)) return;
+        if (!isOpCow(cow)) return;
+
+        // Immune to explosion damage
+        if (event.getSource().is(DamageTypeTags.IS_EXPLOSION)) {
+            event.setCanceled(true);
+            return;
+        }
+
+        // Immune to fall damage
+        if (event.getSource().is(DamageTypeTags.IS_FALL)) {
+            event.setCanceled(true);
         }
     }
 }

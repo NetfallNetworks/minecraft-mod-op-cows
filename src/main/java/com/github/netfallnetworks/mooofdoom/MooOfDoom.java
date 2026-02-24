@@ -7,6 +7,13 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import com.github.netfallnetworks.mooofdoom.cow.DoomAppleUseHandler;
 import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
+import com.github.netfallnetworks.mooofdoom.cow.utility.MilkingHandler;
+import com.github.netfallnetworks.mooofdoom.cow.utility.LootDropHandler;
+import com.github.netfallnetworks.mooofdoom.cow.utility.AuraHandler;
+import com.github.netfallnetworks.mooofdoom.cow.chaos.TeleportHandler;
+import com.github.netfallnetworks.mooofdoom.cow.chaos.SizeChangeHandler;
+import com.github.netfallnetworks.mooofdoom.cow.chaos.ExplosionHandler;
+import com.github.netfallnetworks.mooofdoom.cow.chaos.MoonJumpHandler;
 import com.github.netfallnetworks.mooofdoom.registry.ModEntityTypes;
 import com.github.netfallnetworks.mooofdoom.registry.ModItems;
 import net.neoforged.neoforge.common.NeoForge;
@@ -29,5 +36,16 @@ public class MooOfDoom {
         // Register game event handlers
         NeoForge.EVENT_BUS.register(OpCowManager.class);
         NeoForge.EVENT_BUS.register(DoomAppleUseHandler.class);
+
+        // Utility handlers
+        NeoForge.EVENT_BUS.register(MilkingHandler.class);
+        NeoForge.EVENT_BUS.register(LootDropHandler.class);
+        NeoForge.EVENT_BUS.register(AuraHandler.class);
+
+        // Chaos handlers
+        NeoForge.EVENT_BUS.register(TeleportHandler.class);
+        NeoForge.EVENT_BUS.register(SizeChangeHandler.class);
+        NeoForge.EVENT_BUS.register(ExplosionHandler.class);
+        NeoForge.EVENT_BUS.register(MoonJumpHandler.class);
     }
 }
