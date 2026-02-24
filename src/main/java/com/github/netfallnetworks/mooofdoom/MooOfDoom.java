@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import com.github.netfallnetworks.mooofdoom.cow.DoomAppleUseHandler;
 import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
 import com.github.netfallnetworks.mooofdoom.registry.ModEntityTypes;
 import com.github.netfallnetworks.mooofdoom.registry.ModItems;
@@ -27,5 +28,6 @@ public class MooOfDoom {
 
         // Register game event handlers
         NeoForge.EVENT_BUS.register(OpCowManager.class);
+        NeoForge.EVENT_BUS.register(DoomAppleUseHandler.class);
     }
 }
