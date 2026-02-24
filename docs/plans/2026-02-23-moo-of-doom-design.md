@@ -1,8 +1,8 @@
 # Moo of Doom - Design Document
 
 **Date:** 2026-02-23
-**Minecraft Version:** 1.21.1
-**Mod Loader:** NeoForge (21.1.219+)
+**Minecraft Version:** 1.21.11
+**Mod Loader:** NeoForge (21.11.38-beta+)
 **Java Version:** 21
 **Mod ID:** `mooofdoom`
 **License:** MIT
