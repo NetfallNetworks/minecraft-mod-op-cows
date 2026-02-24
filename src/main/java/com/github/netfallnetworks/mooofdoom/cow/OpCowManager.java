@@ -2,6 +2,7 @@ package com.github.netfallnetworks.mooofdoom.cow;
 
 import com.github.netfallnetworks.mooofdoom.ModConfig;
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
+import com.github.netfallnetworks.mooofdoom.cow.combat.HostileTargetGoal;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -21,6 +22,7 @@ public class OpCowManager {
         cow.addTag(OP_TAG);
         boostAttributes(cow);
         cow.setGlowingTag(true);
+        addCombatGoals(cow);
     }
 
     private static void boostAttributes(Cow cow) {
@@ -39,11 +41,16 @@ public class OpCowManager {
         if (kbAttr != null) {
             kbAttr.setBaseValue(0.8);
         }
+
+        // Set follow range so targeting goals can detect hostiles at the configured distance
+        AttributeInstance followRange = cow.getAttribute(Attributes.FOLLOW_RANGE);
+        if (followRange != null) {
+            followRange.setBaseValue(ModConfig.DETECTION_RANGE.getAsInt());
+        }
     }
 
-    // This will be called by later tasks to add combat goals
     public static void addCombatGoals(Cow cow) {
-        // Goals will be added in Tasks 6, 7, 8
+        cow.targetSelector.addGoal(1, new HostileTargetGoal(cow));
     }
 
     @SubscribeEvent
