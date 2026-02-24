@@ -13,5 +13,8 @@ public class MooOfDoom {
 
     public MooOfDoom(IEventBus modEventBus, ModContainer modContainer) {
         LOGGER.info("Moo of Doom loading...");
+
+        // Register mod configuration
+        modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
     }
 }
