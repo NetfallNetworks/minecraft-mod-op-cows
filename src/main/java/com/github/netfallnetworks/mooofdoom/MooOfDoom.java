@@ -10,7 +10,6 @@ import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
 import com.github.netfallnetworks.mooofdoom.cow.utility.MilkingHandler;
 import com.github.netfallnetworks.mooofdoom.cow.utility.LootDropHandler;
 import com.github.netfallnetworks.mooofdoom.cow.utility.AuraHandler;
-import com.github.netfallnetworks.mooofdoom.cow.chaos.TeleportHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.SizeChangeHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.ExplosionHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.MoonJumpHandler;
@@ -43,7 +42,6 @@ public class MooOfDoom {
         NeoForge.EVENT_BUS.register(AuraHandler.class);
 
         // Chaos handlers
-        NeoForge.EVENT_BUS.register(TeleportHandler.class);
         NeoForge.EVENT_BUS.register(SizeChangeHandler.class);
         NeoForge.EVENT_BUS.register(ExplosionHandler.class);
         NeoForge.EVENT_BUS.register(MoonJumpHandler.class);

@@ -25,12 +25,9 @@ public class ModConfig {
     public static final ModConfigSpec.IntValue DROP_INTERVAL_TICKS;
 
     // --- Chaos ---
-    public static final ModConfigSpec.BooleanValue TELEPORT_ENABLED;
     public static final ModConfigSpec.BooleanValue SIZE_CHANGE_ENABLED;
     public static final ModConfigSpec.BooleanValue EXPLOSION_ENABLED;
     public static final ModConfigSpec.BooleanValue MOON_JUMP_ENABLED;
-    public static final ModConfigSpec.IntValue TELEPORT_INTERVAL_TICKS;
-    public static final ModConfigSpec.IntValue TELEPORT_RANGE;
     public static final ModConfigSpec.IntValue SIZE_CHANGE_INTERVAL_TICKS;
     public static final ModConfigSpec.IntValue EXPLOSION_INTERVAL_TICKS;
     public static final ModConfigSpec.DoubleValue EXPLOSION_POWER;
@@ -88,9 +85,6 @@ public class ModConfig {
         BUILDER.pop();
 
         BUILDER.push("chaos");
-        TELEPORT_ENABLED = BUILDER
-                .comment("Enable random teleportation")
-                .define("teleportEnabled", true);
         SIZE_CHANGE_ENABLED = BUILDER
                 .comment("Enable random size changes")
                 .define("sizeChangeEnabled", true);
@@ -100,12 +94,6 @@ public class ModConfig {
         MOON_JUMP_ENABLED = BUILDER
                 .comment("Enable random moon jumps")
                 .define("moonJumpEnabled", true);
-        TELEPORT_INTERVAL_TICKS = BUILDER
-                .comment("Average ticks between teleports (1200 = ~60 seconds)")
-                .defineInRange("teleportIntervalTicks", 1200, 100, 12000);
-        TELEPORT_RANGE = BUILDER
-                .comment("Max teleport range in blocks")
-                .defineInRange("teleportRange", 15, 3, 32);
         SIZE_CHANGE_INTERVAL_TICKS = BUILDER
                 .comment("Average ticks between size changes (2400 = ~2 minutes)")
                 .defineInRange("sizeChangeIntervalTicks", 2400, 200, 12000);
@@ -116,8 +104,8 @@ public class ModConfig {
                 .comment("Explosion power (TNT is 4.0, creeper is 3.0)")
                 .defineInRange("explosionPower", 2.0, 0.5, 6.0);
         MOON_JUMP_INTERVAL_TICKS = BUILDER
-                .comment("Average ticks between moon jumps (2400 = ~2 minutes)")
-                .defineInRange("moonJumpIntervalTicks", 2400, 200, 12000);
+                .comment("Average ticks between moon jumps (6000 = ~5 minutes)")
+                .defineInRange("moonJumpIntervalTicks", 6000, 200, 12000);
         BUILDER.pop();
 
         SPEC = BUILDER.build();
