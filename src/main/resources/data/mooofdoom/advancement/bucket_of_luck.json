@@ -1,0 +1,22 @@
+{
+  "parent": "mooofdoom:doom_apple",
+  "display": {
+    "icon": { "id": "mooofdoom:bucket_of_luck", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.bucket_of_luck.title"},
+    "description": {"translate": "advancement.mooofdoom.bucket_of_luck.description"},
+    "frame": "challenge"
+  },
+  "criteria": {
+    "got_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": "mooofdoom:bucket_of_luck" }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 100
+  }
+}

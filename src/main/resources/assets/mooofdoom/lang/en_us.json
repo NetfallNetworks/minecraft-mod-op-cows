@@ -7,5 +7,20 @@
     "item.mooofdoom.bucket_of_luck": "Bucket of Luck",
     "entity.mooofdoom.milk_projectile": "Milk Projectile",
     "effect.mooofdoom.rebellion": "Rebellion of the Cows",
-    "effect.mooofdoom.guardian": "Guardian of the Cows"
+    "effect.mooofdoom.guardian": "Guardian of the Cows",
+
+    "advancement.mooofdoom.root.title": "Moo of Doom",
+    "advancement.mooofdoom.root.description": "The cows are watching...",
+    "advancement.mooofdoom.doom_apple.title": "An Apple a Day...",
+    "advancement.mooofdoom.doom_apple.description": "Obtain a Doom Apple. What could go wrong?",
+    "advancement.mooofdoom.bucket_of_strength.title": "Udderly Powerful",
+    "advancement.mooofdoom.bucket_of_strength.description": "Obtain a Bucket of Strength from an OP cow",
+    "advancement.mooofdoom.bucket_of_speed.title": "Fast and the Furry-ous",
+    "advancement.mooofdoom.bucket_of_speed.description": "Obtain a Bucket of Speed from an OP cow",
+    "advancement.mooofdoom.bucket_of_regeneration.title": "Got Milk?",
+    "advancement.mooofdoom.bucket_of_regeneration.description": "Obtain a Bucket of Regeneration from an OP cow",
+    "advancement.mooofdoom.bucket_of_fire_resistance.title": "Too Hot to Handle",
+    "advancement.mooofdoom.bucket_of_fire_resistance.description": "Obtain a Bucket of Fire Resistance from an OP cow",
+    "advancement.mooofdoom.bucket_of_luck.title": "Feeling Lucky, Punk?",
+    "advancement.mooofdoom.bucket_of_luck.description": "Obtain the mythical Bucket of Luck. Moo."
 }

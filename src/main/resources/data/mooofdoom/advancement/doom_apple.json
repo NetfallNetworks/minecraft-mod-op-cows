@@ -1,0 +1,22 @@
+{
+  "parent": "mooofdoom:root",
+  "display": {
+    "icon": { "id": "mooofdoom:doom_apple", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.doom_apple.title"},
+    "description": {"translate": "advancement.mooofdoom.doom_apple.description"},
+    "frame": "task"
+  },
+  "criteria": {
+    "got_doom_apple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": "mooofdoom:doom_apple" }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  }
+}

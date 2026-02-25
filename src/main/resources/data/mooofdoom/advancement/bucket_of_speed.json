@@ -1,0 +1,22 @@
+{
+  "parent": "mooofdoom:doom_apple",
+  "display": {
+    "icon": { "id": "mooofdoom:bucket_of_speed", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.bucket_of_speed.title"},
+    "description": {"translate": "advancement.mooofdoom.bucket_of_speed.description"},
+    "frame": "task"
+  },
+  "criteria": {
+    "got_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": "mooofdoom:bucket_of_speed" }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 20
+  }
+}

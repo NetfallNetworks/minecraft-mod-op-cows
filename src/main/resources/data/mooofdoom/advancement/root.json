@@ -1,0 +1,12 @@
+{
+  "display": {
+    "icon": { "id": "mooofdoom:doom_apple", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.root.title"},
+    "description": {"translate": "advancement.mooofdoom.root.description"},
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "tick": { "trigger": "minecraft:tick" }
+  }
+}
