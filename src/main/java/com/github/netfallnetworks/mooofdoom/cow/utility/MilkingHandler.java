@@ -5,6 +5,8 @@ import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
 import com.github.netfallnetworks.mooofdoom.rarity.RarityTier;
 import com.github.netfallnetworks.mooofdoom.rarity.TieredRandom;
 import com.github.netfallnetworks.mooofdoom.registry.ModItems;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.item.Item;
@@ -20,8 +22,13 @@ public class MilkingHandler {
         if (event.getLevel().isClientSide()) return;
         if (!ModConfig.ENCHANTED_MILK_ENABLED.getAsBoolean()) return;
         if (!(event.getTarget() instanceof Cow cow)) return;
-        if (!OpCowManager.isOpCow(cow)) return;
         if (!event.getItemStack().is(Items.BUCKET)) return;
+
+        // Check if this is an OP cow or a companion cow (morphed player)
+        boolean isOpCow = OpCowManager.isOpCow(cow);
+        boolean isCompanionCow = cow.getTags().contains("MooOfDoom_Companion");
+
+        if (!isOpCow && !isCompanionCow) return;
 
         // Replace normal milking with tiered buff bucket
         event.setCanceled(true);
@@ -33,6 +40,13 @@ public class MilkingHandler {
         }
         event.getEntity().getInventory().add(new ItemStack(bucketItem));
         cow.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+
+        // Extra sparkle effect when milking a morphed player
+        if (isCompanionCow && cow.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER,
+                    cow.getX(), cow.getY() + 1, cow.getZ(),
+                    10, 0.3, 0.3, 0.3, 0.1);
+        }
     }
 
     private static Item rollBuffBucket(Cow cow) {
