@@ -7,14 +7,16 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class MilkProjectile extends ThrowableProjectile {
+public class MilkProjectile extends ThrowableItemProjectile {
 
-    public MilkProjectile(EntityType<? extends ThrowableProjectile> type, Level level) {
+    public MilkProjectile(EntityType<? extends ThrowableItemProjectile> type, Level level) {
         super(type, level);
     }
 
@@ -22,6 +24,11 @@ public class MilkProjectile extends ThrowableProjectile {
         super(ModEntityTypes.MILK_PROJECTILE.get(), level);
         this.setOwner(shooter);
         this.setPos(shooter.getX(), shooter.getEyeY() - 0.1, shooter.getZ());
+    }
+
+    @Override
+    protected Item getDefaultItem() {
+        return Items.MILK_BUCKET;
     }
 
     @Override
@@ -52,8 +59,4 @@ public class MilkProjectile extends ThrowableProjectile {
         }
     }
 
-    @Override
-    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
-        // No extra synched data needed
-    }
 }
