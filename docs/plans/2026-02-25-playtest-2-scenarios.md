@@ -3,6 +3,30 @@
 **Build:** `8349b1c` (all playtest 1 tasks complete)
 **Date:** 2026-02-25
 
+## Overview
+
+| Section | Coverage | Tests |
+|---------|----------|-------|
+| **A. Core Systems** | OP activation, combat AI, chaos, aura (regressions) | 14 |
+| **B. Doom Apple — Eating** | Food mechanics, all 5 tiered outcomes, cow morph | 13 |
+| **C. Doom Apple — Feeding** | Cow conversion, OP cow waste, hostile mob tiers | 10 |
+| **D. Milking** | OP cow milking, all 5 buff buckets, companion cow milking | 11 |
+| **E. Rebellion** | 3 triggers, cow aggro behavior, cleanup | 8 |
+| **F. Guardian** | Wheat trigger, cow follow/defend, cleanup | 6 |
+| **G. OP Cow Death** | Dramatic totem-pop, Rebellion trigger | 3 |
+| **H. Dynamic Loot** | Vanilla 2x, MOOCOW multiplier, tiered rare drops, alive drops | 9 |
+| **I. Advancements** | Tab, 7 advancements, tree layout | 9 |
+| **J. Recipe** | Doom Apple crafting | 3 |
+| **K. Edge Cases** | Interaction priority, creative mode, Rebellion+Guardian overlap, companion cow in ALL_COWS mode, buff bucket clearing god-mode, tag persistence | 14 |
+| **L. Performance** | Many OP cows, mass Rebellion pathfinding | 3 |
+
+**Total: ~103 test cases** across new features, regressions, and edge cases.
+
+**Scoring:** PASS / FAIL / AWKWARD (works but feels wrong) / CRASH (include log)
+**Priority:** CRASH > FAIL > AWKWARD
+
+---
+
 ## Setup
 
 1. Fresh world, Survival mode, default config
