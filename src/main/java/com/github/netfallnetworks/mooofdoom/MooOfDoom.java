@@ -7,12 +7,16 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import com.github.netfallnetworks.mooofdoom.cow.DoomAppleUseHandler;
 import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
+import com.github.netfallnetworks.mooofdoom.cow.effects.GuardianHandler;
+import com.github.netfallnetworks.mooofdoom.cow.effects.OpCowDeathHandler;
+import com.github.netfallnetworks.mooofdoom.cow.effects.RebellionHandler;
 import com.github.netfallnetworks.mooofdoom.cow.utility.MilkingHandler;
 import com.github.netfallnetworks.mooofdoom.cow.utility.LootDropHandler;
 import com.github.netfallnetworks.mooofdoom.cow.utility.AuraHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.SizeChangeHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.ExplosionHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.MoonJumpHandler;
+import com.github.netfallnetworks.mooofdoom.registry.ModEffects;
 import com.github.netfallnetworks.mooofdoom.registry.ModEntityTypes;
 import com.github.netfallnetworks.mooofdoom.registry.ModItems;
 import net.neoforged.neoforge.common.NeoForge;
@@ -28,6 +32,7 @@ public class MooOfDoom {
         // Register deferred registers
         ModItems.ITEMS.register(modEventBus);
         ModEntityTypes.ENTITY_TYPES.register(modEventBus);
+        ModEffects.MOB_EFFECTS.register(modEventBus);
 
         // Register mod configuration
         modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
@@ -45,5 +50,10 @@ public class MooOfDoom {
         NeoForge.EVENT_BUS.register(SizeChangeHandler.class);
         NeoForge.EVENT_BUS.register(ExplosionHandler.class);
         NeoForge.EVENT_BUS.register(MoonJumpHandler.class);
+
+        // Effect handlers (Rebellion, Guardian, OP Cow Death)
+        NeoForge.EVENT_BUS.register(RebellionHandler.class);
+        NeoForge.EVENT_BUS.register(GuardianHandler.class);
+        NeoForge.EVENT_BUS.register(OpCowDeathHandler.class);
     }
 }

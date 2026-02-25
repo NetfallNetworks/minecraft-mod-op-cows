@@ -5,5 +5,7 @@
     "item.mooofdoom.bucket_of_strength": "Bucket of Strength",
     "item.mooofdoom.bucket_of_fire_resistance": "Bucket of Fire Resistance",
     "item.mooofdoom.bucket_of_luck": "Bucket of Luck",
-    "entity.mooofdoom.milk_projectile": "Milk Projectile"
+    "entity.mooofdoom.milk_projectile": "Milk Projectile",
+    "effect.mooofdoom.rebellion": "Rebellion of the Cows",
+    "effect.mooofdoom.guardian": "Guardian of the Cows"
 }
