@@ -1,5 +1,9 @@
 {
     "item.mooofdoom.doom_apple": "Doom Apple",
-    "item.mooofdoom.enchanted_milk": "Enchanted Milk",
+    "item.mooofdoom.bucket_of_speed": "Bucket of Speed",
+    "item.mooofdoom.bucket_of_regeneration": "Bucket of Regeneration",
+    "item.mooofdoom.bucket_of_strength": "Bucket of Strength",
+    "item.mooofdoom.bucket_of_fire_resistance": "Bucket of Fire Resistance",
+    "item.mooofdoom.bucket_of_luck": "Bucket of Luck",
     "entity.mooofdoom.milk_projectile": "Milk Projectile"
 }
