@@ -89,7 +89,10 @@ public class OpCowManager {
                 }
             }
             case ITEM_ACTIVATED -> {
-                // Handled by Doom Apple use, not here
+                // Mythic natural spawns: small chance for OP cows regardless of mode
+                if (cow.getRandom().nextDouble() < ModConfig.MYTHIC_SPAWN_CHANCE.get()) {
+                    makeOpCow(cow);
+                }
             }
         }
     }

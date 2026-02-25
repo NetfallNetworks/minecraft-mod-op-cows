@@ -8,6 +8,7 @@ public class ModConfig {
     // --- Activation ---
     public static final ModConfigSpec.EnumValue<ActivationMode> ACTIVATION_MODE;
     public static final ModConfigSpec.DoubleValue RARE_SPAWN_CHANCE;
+    public static final ModConfigSpec.DoubleValue MYTHIC_SPAWN_CHANCE;
 
     // --- Combat ---
     public static final ModConfigSpec.BooleanValue CHARGE_ATTACK_ENABLED;
@@ -33,16 +34,38 @@ public class ModConfig {
     public static final ModConfigSpec.DoubleValue EXPLOSION_POWER;
     public static final ModConfigSpec.IntValue MOON_JUMP_INTERVAL_TICKS;
 
+    // --- Loot ---
+    public static final ModConfigSpec.IntValue MOOCOW_MULTIPLIER;
+    public static final ModConfigSpec.IntValue VANILLA_COW_LOOT_MULTIPLIER;
+
+    // --- Rebellion & Guardian ---
+    public static final ModConfigSpec.BooleanValue REBELLION_ENABLED;
+    public static final ModConfigSpec.IntValue REBELLION_DURATION_TICKS;
+    public static final ModConfigSpec.IntValue REBELLION_RANGE;
+    public static final ModConfigSpec.BooleanValue GUARDIAN_ENABLED;
+    public static final ModConfigSpec.IntValue GUARDIAN_DURATION_TICKS;
+    public static final ModConfigSpec.IntValue GUARDIAN_RANGE;
+
+    // --- Rarity Weights ---
+    public static final ModConfigSpec.IntValue RARITY_COMMON_WEIGHT;
+    public static final ModConfigSpec.IntValue RARITY_UNCOMMON_WEIGHT;
+    public static final ModConfigSpec.IntValue RARITY_RARE_WEIGHT;
+    public static final ModConfigSpec.IntValue RARITY_LEGENDARY_WEIGHT;
+    public static final ModConfigSpec.IntValue RARITY_MYTHIC_WEIGHT;
+
     static final ModConfigSpec SPEC;
 
     static {
         BUILDER.push("activation");
         ACTIVATION_MODE = BUILDER
                 .comment("How cows become OP: ALL_COWS, ITEM_ACTIVATED, or RARE_SPAWN")
-                .defineEnum("mode", ActivationMode.ALL_COWS);
+                .defineEnum("mode", ActivationMode.ITEM_ACTIVATED);
         RARE_SPAWN_CHANCE = BUILDER
                 .comment("Chance (0.0-1.0) for a cow to spawn as OP in RARE_SPAWN mode")
                 .defineInRange("rareSpawnChance", 0.05, 0.0, 1.0);
+        MYTHIC_SPAWN_CHANCE = BUILDER
+                .comment("Chance (0.0-1.0) for a cow to naturally spawn as OP regardless of mode")
+                .defineInRange("mythicSpawnChance", 0.01, 0.0, 1.0);
         BUILDER.pop();
 
         BUILDER.push("combat");
@@ -106,6 +129,54 @@ public class ModConfig {
         MOON_JUMP_INTERVAL_TICKS = BUILDER
                 .comment("Average ticks between moon jumps (6000 = ~5 minutes)")
                 .defineInRange("moonJumpIntervalTicks", 6000, 200, 12000);
+        BUILDER.pop();
+
+        BUILDER.push("loot");
+        MOOCOW_MULTIPLIER = BUILDER
+                .comment("Max loot multiplier for 1-hit OP cow kills (10x HP = 10x loot)")
+                .defineInRange("moocowMultiplier", 10, 1, 100);
+        VANILLA_COW_LOOT_MULTIPLIER = BUILDER
+                .comment("Loot multiplier for vanilla (non-OP) cow kills")
+                .defineInRange("vanillaCowLootMultiplier", 2, 1, 10);
+        BUILDER.pop();
+
+        BUILDER.push("effects");
+        REBELLION_ENABLED = BUILDER
+                .comment("Enable Rebellion of the Cows debuff")
+                .define("rebellionEnabled", true);
+        REBELLION_DURATION_TICKS = BUILDER
+                .comment("Duration of Rebellion debuff in ticks (2400 = 2 minutes)")
+                .defineInRange("rebellionDurationTicks", 2400, 200, 12000);
+        REBELLION_RANGE = BUILDER
+                .comment("Range in blocks for Rebellion/Guardian effects")
+                .defineInRange("rebellionRange", 16, 4, 64);
+        GUARDIAN_ENABLED = BUILDER
+                .comment("Enable Guardian of the Cows buff")
+                .define("guardianEnabled", true);
+        GUARDIAN_DURATION_TICKS = BUILDER
+                .comment("Duration of Guardian buff in ticks (2400 = 2 minutes)")
+                .defineInRange("guardianDurationTicks", 2400, 200, 12000);
+        GUARDIAN_RANGE = BUILDER
+                .comment("Range in blocks for Guardian buff cow follow/defend")
+                .defineInRange("guardianRange", 16, 4, 64);
+        BUILDER.pop();
+
+        BUILDER.push("rarity");
+        RARITY_COMMON_WEIGHT = BUILDER
+                .comment("Weight for Common tier rolls")
+                .defineInRange("commonWeight", 50, 0, 1000);
+        RARITY_UNCOMMON_WEIGHT = BUILDER
+                .comment("Weight for Uncommon tier rolls")
+                .defineInRange("uncommonWeight", 30, 0, 1000);
+        RARITY_RARE_WEIGHT = BUILDER
+                .comment("Weight for Rare tier rolls")
+                .defineInRange("rareWeight", 15, 0, 1000);
+        RARITY_LEGENDARY_WEIGHT = BUILDER
+                .comment("Weight for Legendary tier rolls")
+                .defineInRange("legendaryWeight", 4, 0, 1000);
+        RARITY_MYTHIC_WEIGHT = BUILDER
+                .comment("Weight for Mythic tier rolls")
+                .defineInRange("mythicWeight", 1, 0, 1000);
         BUILDER.pop();
 
         SPEC = BUILDER.build();
