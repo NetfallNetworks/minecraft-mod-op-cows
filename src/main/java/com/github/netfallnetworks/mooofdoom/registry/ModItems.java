@@ -1,19 +1,25 @@
 package com.github.netfallnetworks.mooofdoom.registry;
 
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
+import com.github.netfallnetworks.mooofdoom.cow.DoomAppleItem;
 import com.github.netfallnetworks.mooofdoom.cow.utility.BuffBucketItem;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.component.Consumable;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MooOfDoom.MODID);
 
-    public static final DeferredItem<Item> DOOM_APPLE = ITEMS.registerSimpleItem(
+    public static final DeferredItem<DoomAppleItem> DOOM_APPLE = ITEMS.registerItem(
             "doom_apple",
-            p -> p.stacksTo(16).rarity(Rarity.EPIC)
+            DoomAppleItem::new,
+            new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)
+                    .food(new FoodProperties(4, 9.6f, true),
+                            Consumable.builder().consumeSeconds(1.6F).build())
     );
 
     // Buff Buckets — tiered rarity (Common → Mythic)

@@ -5,7 +5,9 @@ import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import com.github.netfallnetworks.mooofdoom.cow.CowMorphHandler;
 import com.github.netfallnetworks.mooofdoom.cow.DoomAppleUseHandler;
+import com.github.netfallnetworks.mooofdoom.cow.MobConversionHandler;
 import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
 import com.github.netfallnetworks.mooofdoom.cow.effects.GuardianHandler;
 import com.github.netfallnetworks.mooofdoom.cow.effects.OpCowDeathHandler;
@@ -55,5 +57,9 @@ public class MooOfDoom {
         NeoForge.EVENT_BUS.register(RebellionHandler.class);
         NeoForge.EVENT_BUS.register(GuardianHandler.class);
         NeoForge.EVENT_BUS.register(OpCowDeathHandler.class);
+
+        // Doom Apple conversion handlers
+        NeoForge.EVENT_BUS.register(CowMorphHandler.class);
+        NeoForge.EVENT_BUS.register(MobConversionHandler.class);
     }
 }
