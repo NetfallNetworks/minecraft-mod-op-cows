@@ -12,6 +12,7 @@ import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
 import com.github.netfallnetworks.mooofdoom.cow.effects.GuardianHandler;
 import com.github.netfallnetworks.mooofdoom.cow.effects.OpCowDeathHandler;
 import com.github.netfallnetworks.mooofdoom.cow.effects.RebellionHandler;
+import com.github.netfallnetworks.mooofdoom.cow.utility.CombatLootHandler;
 import com.github.netfallnetworks.mooofdoom.cow.utility.MilkingHandler;
 import com.github.netfallnetworks.mooofdoom.cow.utility.LootDropHandler;
 import com.github.netfallnetworks.mooofdoom.cow.utility.AuraHandler;
@@ -46,6 +47,7 @@ public class MooOfDoom {
         // Utility handlers
         NeoForge.EVENT_BUS.register(MilkingHandler.class);
         NeoForge.EVENT_BUS.register(LootDropHandler.class);
+        NeoForge.EVENT_BUS.register(CombatLootHandler.class);
         NeoForge.EVENT_BUS.register(AuraHandler.class);
 
         // Chaos handlers
