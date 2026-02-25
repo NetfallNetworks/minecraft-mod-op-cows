@@ -56,14 +56,7 @@ public class CombatLootHandler {
         hitCounts.remove(cow.getId());
 
         int moocow = ModConfig.MOOCOW_MULTIPLIER.getAsInt();
-        int multiplier;
-        if (hits >= 10) {
-            multiplier = 1;
-        } else if (hits == 1) {
-            multiplier = moocow;
-        } else {
-            multiplier = (int) Math.round(moocow - (hits - 1.0) * (moocow - 1.0) / 9.0);
-        }
+        int multiplier = calculateMultiplier(hits, moocow);
 
         // Drop extra base drops (vanilla loot table provides 1x, we add multiplier-1 extra)
         int extra = multiplier - 1;
@@ -115,6 +108,16 @@ public class CombatLootHandler {
             case LEGENDARY -> dropItem(cow, new ItemStack(Items.NETHERITE_SCRAP, 1));
             case MYTHIC -> dropItem(cow, new ItemStack(ModItems.DOOM_APPLE.get()));
         }
+    }
+
+    /**
+     * Calculate the MOOCOW loot multiplier based on hit count.
+     * 1-hit kill = max multiplier, 10+ hits = 1x, linear interpolation between.
+     */
+    static int calculateMultiplier(int hits, int moocowMax) {
+        if (hits >= 10) return 1;
+        if (hits <= 1) return moocowMax;
+        return (int) Math.round(moocowMax - (hits - 1.0) * (moocowMax - 1.0) / 9.0);
     }
 
     static void dropItem(Cow cow, ItemStack stack) {
