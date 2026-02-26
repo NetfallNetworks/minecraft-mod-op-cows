@@ -30,34 +30,18 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build and Test
+        id: build
         run: |
-          set -x
-          ./gradlew clean build --no-configuration-cache --no-build-cache --stacktrace --console=plain
-          echo "=== Build exit code: $? ==="
-          echo "=== build/libs/ ==="
-          ls -la build/libs/ || echo "NO build/libs/ DIRECTORY"
-          echo "=== All JARs ==="
-          find build/ -name "*.jar" || echo "NO JARS"
-
-      - name: Build diagnostics
-        if: always()
-        run: |
-          {
-            echo "## Build Diagnostics"
-            echo '```'
-            echo "build/libs/:"
-            ls -la build/libs/ 2>/dev/null || echo "(does not exist)"
-            echo ""
-            echo "All JARs:"
-            find build/ -name "*.jar" 2>/dev/null || echo "(none)"
-            echo ""
-            echo "build/ top-level:"
-            ls build/ 2>/dev/null || echo "(empty)"
-            echo ""
-            echo "build/classes/:"
-            find build/classes -type f 2>/dev/null | head -10 || echo "(none)"
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          ./gradlew clean build --no-configuration-cache --no-build-cache --stacktrace --console=plain > build-output.log 2>&1 || true
+          BUILD_EXIT=$?
+          echo "build_exit=$BUILD_EXIT" >> "$GITHUB_OUTPUT"
+          cat build-output.log
+          if [ "$BUILD_EXIT" -ne 0 ]; then
+            # Extract and emit errors as annotations
+            ERRORS=$(tail -80 build-output.log | head -60)
+            echo "::error title=Build Failed::$(echo "$ERRORS" | tr '\n' '%0A')"
+            exit 1
+          fi
 
       - name: Upload Test Report
         if: failure()
