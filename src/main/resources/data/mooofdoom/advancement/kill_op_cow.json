@@ -1,0 +1,15 @@
+{
+  "parent": "mooofdoom:first_op_cow",
+  "display": {
+    "icon": { "id": "minecraft:diamond_sword", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.kill_op_cow.title"},
+    "description": {"translate": "advancement.mooofdoom.kill_op_cow.description"},
+    "frame": "task"
+  },
+  "criteria": {
+    "kill_op_cow": {
+      "trigger": "mooofdoom:kill_op_cow"
+    }
+  },
+  "rewards": { "experience": 40 }
+}

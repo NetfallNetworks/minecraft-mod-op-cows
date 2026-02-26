@@ -22,5 +22,20 @@
     "advancement.mooofdoom.bucket_of_fire_resistance.title": "Too Hot to Handle",
     "advancement.mooofdoom.bucket_of_fire_resistance.description": "Obtain a Bucket of Fire Resistance from an OP cow",
     "advancement.mooofdoom.bucket_of_luck.title": "Feeling Lucky, Punk?",
-    "advancement.mooofdoom.bucket_of_luck.description": "Obtain the mythical Bucket of Luck. Moo."
+    "advancement.mooofdoom.bucket_of_luck.description": "Obtain the mythical Bucket of Luck. Moo.",
+
+    "advancement.mooofdoom.first_op_cow.title": "Rise of the Moo-chine",
+    "advancement.mooofdoom.first_op_cow.description": "Create your first OP cow with a Doom Apple",
+    "advancement.mooofdoom.rebellion.title": "You've Made a Moo-stake",
+    "advancement.mooofdoom.rebellion.description": "Anger the cows and face their wrath",
+    "advancement.mooofdoom.guardian.title": "Herd Mentality",
+    "advancement.mooofdoom.guardian.description": "Earn the cows' loyalty with wheat",
+    "advancement.mooofdoom.kill_op_cow.title": "Holy Cow!",
+    "advancement.mooofdoom.kill_op_cow.description": "Defeat an OP cow. Was it worth it?",
+    "advancement.mooofdoom.cow_morph.title": "Udderly Transformed",
+    "advancement.mooofdoom.cow_morph.description": "Experience the mythic cow morph. Moo?",
+    "advancement.mooofdoom.convert_hostile.title": "Change of Heart",
+    "advancement.mooofdoom.convert_hostile.description": "Feed a Doom Apple to a hostile mob",
+    "advancement.mooofdoom.collect_all_buckets.title": "The Full Dairy",
+    "advancement.mooofdoom.collect_all_buckets.description": "Collect every type of buff bucket"
 }

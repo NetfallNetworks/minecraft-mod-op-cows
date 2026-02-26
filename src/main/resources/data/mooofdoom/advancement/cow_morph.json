@@ -1,0 +1,15 @@
+{
+  "parent": "mooofdoom:doom_apple",
+  "display": {
+    "icon": { "id": "minecraft:cow_spawn_egg", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.cow_morph.title"},
+    "description": {"translate": "advancement.mooofdoom.cow_morph.description"},
+    "frame": "challenge"
+  },
+  "criteria": {
+    "cow_morph": {
+      "trigger": "mooofdoom:cow_morph"
+    }
+  },
+  "rewards": { "experience": 100 }
+}

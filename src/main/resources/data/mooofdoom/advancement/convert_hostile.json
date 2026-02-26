@@ -1,0 +1,15 @@
+{
+  "parent": "mooofdoom:doom_apple",
+  "display": {
+    "icon": { "id": "minecraft:zombie_head", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.convert_hostile.title"},
+    "description": {"translate": "advancement.mooofdoom.convert_hostile.description"},
+    "frame": "task"
+  },
+  "criteria": {
+    "convert_hostile": {
+      "trigger": "mooofdoom:convert_hostile"
+    }
+  },
+  "rewards": { "experience": 30 }
+}

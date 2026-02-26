@@ -3,7 +3,9 @@ package com.github.netfallnetworks.mooofdoom.cow;
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
 import com.github.netfallnetworks.mooofdoom.rarity.RarityTier;
 import com.github.netfallnetworks.mooofdoom.rarity.TieredRandom;
+import com.github.netfallnetworks.mooofdoom.registry.ModCriteriaTriggers;
 import com.github.netfallnetworks.mooofdoom.registry.ModItems;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -57,6 +59,11 @@ public class DoomAppleUseHandler {
                 cow.getX(), cow.getY() + 1, cow.getZ(),
                 50, 0.5, 1.0, 0.5, 0.2);
         cow.playSound(SoundEvents.TOTEM_USE, 1.0F, 1.0F);
+
+        // Advancement: created first OP cow
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            ModCriteriaTriggers.CREATE_OP_COW.get().trigger(serverPlayer);
+        }
     }
 
     private static void handleHostileFeed(PlayerInteractEvent.EntityInteract event, Monster monster) {
@@ -68,5 +75,10 @@ public class DoomAppleUseHandler {
 
         RarityTier tier = TieredRandom.roll(event.getEntity().getRandom());
         MobConversionHandler.applyHostileConversion(monster, event.getEntity(), tier);
+
+        // Advancement: converted a hostile mob
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            ModCriteriaTriggers.CONVERT_HOSTILE.get().trigger(serverPlayer);
+        }
     }
 }

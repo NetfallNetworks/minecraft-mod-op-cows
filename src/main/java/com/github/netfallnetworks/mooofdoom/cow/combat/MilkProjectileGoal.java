@@ -40,7 +40,13 @@ public class MilkProjectileGoal extends Goal {
             double dx = target.getX() - cow.getX();
             double dy = target.getEyeY() - cow.getEyeY();
             double dz = target.getZ() - cow.getZ();
-            projectile.shoot(dx, dy, dz, 1.5F, 2.0F);
+            // Lead the target: offset aim by target's velocity * estimated travel time
+            double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            double travelTime = dist / 1.8; // estimate based on projectile speed
+            dx += target.getDeltaMovement().x * travelTime;
+            dy += target.getDeltaMovement().y * travelTime;
+            dz += target.getDeltaMovement().z * travelTime;
+            projectile.shoot(dx, dy, dz, 1.8F, 1.0F);
             cow.level().addFreshEntity(projectile);
             cooldown = 40; // 2 second cooldown
         } else {

@@ -3,7 +3,9 @@ package com.github.netfallnetworks.mooofdoom.cow.effects;
 import com.github.netfallnetworks.mooofdoom.ModConfig;
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
 import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
+import com.github.netfallnetworks.mooofdoom.registry.ModCriteriaTriggers;
 import com.github.netfallnetworks.mooofdoom.registry.ModEffects;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -132,5 +134,10 @@ public class RebellionHandler {
         int duration = ModConfig.REBELLION_DURATION_TICKS.getAsInt();
         player.addEffect(new MobEffectInstance(ModEffects.REBELLION, duration, 0, false, true, true));
         MooOfDoom.LOGGER.debug("Applied Rebellion to player {}", player.getName().getString());
+
+        // Advancement: got rebellion
+        if (player instanceof ServerPlayer serverPlayer) {
+            ModCriteriaTriggers.GET_REBELLION.get().trigger(serverPlayer);
+        }
     }
 }

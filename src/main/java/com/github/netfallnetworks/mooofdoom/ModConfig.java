@@ -58,7 +58,9 @@ public class ModConfig {
     static {
         BUILDER.push("activation");
         ACTIVATION_MODE = BUILDER
-                .comment("How cows become OP: ALL_COWS, ITEM_ACTIVATED, or RARE_SPAWN")
+                .comment("How cows become OP: ALL_COWS, ITEM_ACTIVATED, or RARE_SPAWN.",
+                         "NOTE: Config files persist between mod updates. If you changed this default",
+                         "in a previous version, delete mooofdoom-common.toml to pick up new defaults.")
                 .defineEnum("mode", ActivationMode.ITEM_ACTIVATED);
         RARE_SPAWN_CHANCE = BUILDER
                 .comment("Chance (0.0-1.0) for a cow to spawn as OP in RARE_SPAWN mode")

@@ -19,6 +19,7 @@ import com.github.netfallnetworks.mooofdoom.cow.utility.AuraHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.SizeChangeHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.ExplosionHandler;
 import com.github.netfallnetworks.mooofdoom.cow.chaos.MoonJumpHandler;
+import com.github.netfallnetworks.mooofdoom.registry.ModCriteriaTriggers;
 import com.github.netfallnetworks.mooofdoom.registry.ModEffects;
 import com.github.netfallnetworks.mooofdoom.registry.ModEntityTypes;
 import com.github.netfallnetworks.mooofdoom.registry.ModItems;
@@ -36,6 +37,7 @@ public class MooOfDoom {
         ModItems.ITEMS.register(modEventBus);
         ModEntityTypes.ENTITY_TYPES.register(modEventBus);
         ModEffects.MOB_EFFECTS.register(modEventBus);
+        ModCriteriaTriggers.TRIGGERS.register(modEventBus);
 
         // Register mod configuration
         modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
