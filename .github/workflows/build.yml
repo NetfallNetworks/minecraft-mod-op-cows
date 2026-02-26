@@ -31,13 +31,13 @@ jobs:
 
       - name: Build and Test
         id: build
-        run: ./gradlew build --no-configuration-cache --stacktrace 2>&1 | tee build-output.log
+        run: ./gradlew build --no-configuration-cache --no-build-cache --stacktrace 2>&1 | tee build-output.log
 
       - name: Retry Build and Test
         if: failure() && steps.build.outcome == 'failure'
         run: |
           ./gradlew clean --no-configuration-cache
-          ./gradlew build --no-configuration-cache --stacktrace 2>&1 | tee retry-output.log
+          ./gradlew build --no-configuration-cache --no-build-cache --stacktrace 2>&1 | tee retry-output.log
 
       - name: Print Build Logs on Failure
         if: failure()
@@ -57,6 +57,14 @@ jobs:
         with:
           name: test-report-${{ github.sha }}
           path: build/reports/tests/
+
+      - name: List build outputs
+        if: always()
+        run: |
+          echo "=== build/libs/ ==="
+          ls -la build/libs/ 2>/dev/null || echo "(directory does not exist)"
+          echo "=== All JARs in build/ ==="
+          find build/ -name "*.jar" 2>/dev/null || echo "(none found)"
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
