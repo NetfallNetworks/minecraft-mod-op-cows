@@ -33,13 +33,7 @@ jobs:
 
       - name: Print Test Failures
         if: failure()
-        run: |
-          echo "=== Test Results ==="
-          find build/reports/tests -name "*.xml" -path "*/TEST-*" -exec echo "--- {} ---" \; -exec cat {} \; 2>/dev/null || true
-          echo "=== Test Output ==="
-          find build/test-results -name "*.xml" -exec echo "--- {} ---" \; -exec cat {} \; 2>/dev/null || true
-          echo "=== Build Output ==="
-          find build/reports -name "*.html" -exec echo "--- {} ---" \; 2>/dev/null || true
+        run: find build/test-results -name "*.xml" -exec cat {} \; 2>/dev/null || true
 
       - name: Upload Test Report
         if: failure()
