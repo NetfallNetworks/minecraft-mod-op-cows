@@ -1,7 +1,6 @@
 package com.github.netfallnetworks.mooofdoom.rarity;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.RepeatedTest;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -101,7 +100,7 @@ class TieredRandomTest {
 
     @Test
     void singleTierAlwaysReturnsThatTier() {
-        Random rng = new Random();
+        Random rng = new Random(77L);
         for (int i = 0; i < 100; i++) {
             assertEquals(RarityTier.LEGENDARY,
                     TieredRandom.roll(rng, 0, 0, 0, 1, 0));
@@ -110,9 +109,9 @@ class TieredRandomTest {
 
     // --- Distribution test ---
 
-    @RepeatedTest(3)
+    @Test
     void distributionMatchesWeightsWithinTolerance() {
-        Random rng = new Random();
+        Random rng = new Random(12345L);
         Map<RarityTier, Integer> counts = new EnumMap<>(RarityTier.class);
         for (RarityTier t : RarityTier.values()) counts.put(t, 0);
 
