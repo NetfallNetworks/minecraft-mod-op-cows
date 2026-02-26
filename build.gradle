@@ -9,7 +9,15 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = mod_version
+// Derive mod version from git tags — the tag is the single source of truth.
+// Tagged commit v1.0.0 → "1.0.0", 3 commits later → "1.0.0-3-gabcdef", no tags → short SHA.
+def gitDescribe = 'git describe --tags --match v* --always'.execute()
+gitDescribe.waitFor()
+def gitVersion = gitDescribe.exitValue() == 0
+        ? gitDescribe.text.trim().replaceFirst(/^v/, '')
+        : mod_version // fallback to gradle.properties if git unavailable
+
+version = "${minecraft_version}-${gitVersion}"
 group = mod_group_id
 
 repositories {
@@ -72,6 +80,12 @@ configurations {
 }
 
 dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -82,7 +96,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
-            mod_version            : mod_version,
+            mod_version            : gitVersion,
     ]
     inputs.properties replaceProperties
     expand replaceProperties

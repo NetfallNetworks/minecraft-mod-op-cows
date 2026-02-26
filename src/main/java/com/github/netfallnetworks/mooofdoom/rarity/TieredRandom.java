@@ -20,16 +20,7 @@ public class TieredRandom {
         int mythic = ModConfig.RARITY_MYTHIC_WEIGHT.getAsInt();
 
         int total = common + uncommon + rare + legendary + mythic;
-        int roll = random.nextInt(total);
-
-        if (roll < common) return RarityTier.COMMON;
-        roll -= common;
-        if (roll < uncommon) return RarityTier.UNCOMMON;
-        roll -= uncommon;
-        if (roll < rare) return RarityTier.RARE;
-        roll -= rare;
-        if (roll < legendary) return RarityTier.LEGENDARY;
-        return RarityTier.MYTHIC;
+        return roll(random.nextInt(total), common, uncommon, rare, legendary, mythic);
     }
 
     /**
@@ -43,15 +34,28 @@ public class TieredRandom {
         int mythic = ModConfig.RARITY_MYTHIC_WEIGHT.getAsInt();
 
         int total = common + uncommon + rare + legendary + mythic;
-        int roll = random.nextInt(total);
+        return roll(random.nextInt(total), common, uncommon, rare, legendary, mythic);
+    }
 
-        if (roll < common) return RarityTier.COMMON;
-        roll -= common;
-        if (roll < uncommon) return RarityTier.UNCOMMON;
-        roll -= uncommon;
-        if (roll < rare) return RarityTier.RARE;
-        roll -= rare;
-        if (roll < legendary) return RarityTier.LEGENDARY;
+    /**
+     * Pure logic: roll a tier from explicit weights. Testable without ModConfig.
+     */
+    public static RarityTier roll(int rollValue, int common, int uncommon, int rare, int legendary, int mythic) {
+        if (rollValue < common) return RarityTier.COMMON;
+        rollValue -= common;
+        if (rollValue < uncommon) return RarityTier.UNCOMMON;
+        rollValue -= uncommon;
+        if (rollValue < rare) return RarityTier.RARE;
+        rollValue -= rare;
+        if (rollValue < legendary) return RarityTier.LEGENDARY;
         return RarityTier.MYTHIC;
+    }
+
+    /**
+     * Pure logic: roll a tier using a Random and explicit weights.
+     */
+    public static RarityTier roll(java.util.Random random, int common, int uncommon, int rare, int legendary, int mythic) {
+        int total = common + uncommon + rare + legendary + mythic;
+        return roll(random.nextInt(total), common, uncommon, rare, legendary, mythic);
     }
 }
