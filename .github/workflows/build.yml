@@ -62,17 +62,33 @@ jobs:
           name: test-report-${{ github.sha }}
           path: build/reports/tests/
 
-      - name: List build outputs
+      - name: Collect diagnostics
         if: always()
         run: |
-          echo "=== build/libs/ ==="
-          ls -la build/libs/ 2>/dev/null || echo "(directory does not exist)"
-          echo "=== build/classes/ ==="
-          find build/classes -type f 2>/dev/null | head -20 || echo "(no class files)"
-          echo "=== All JARs in build/ ==="
-          find build/ -name "*.jar" 2>/dev/null || echo "(none found)"
-          echo "=== Gradle task outcomes from build log ==="
-          grep -E '(UP-TO-DATE|FROM-CACHE|NO-SOURCE|SKIPPED|EXECUTED)' build-output.log 2>/dev/null | tail -30 || true
+          {
+            echo "=== build/libs/ ==="
+            ls -la build/libs/ 2>/dev/null || echo "(directory does not exist)"
+            echo ""
+            echo "=== build/classes/ ==="
+            find build/classes -type f 2>/dev/null | head -30 || echo "(no class files)"
+            echo ""
+            echo "=== All JARs in build/ ==="
+            find build/ -name "*.jar" 2>/dev/null || echo "(none found)"
+            echo ""
+            echo "=== Full build directory tree (depth 3) ==="
+            find build/ -maxdepth 3 -type f 2>/dev/null | head -80 || echo "(empty)"
+            echo ""
+            echo "=== Last 200 lines of build output ==="
+            tail -200 build-output.log 2>/dev/null || echo "(no build log)"
+          } > build-diagnostics.txt 2>&1
+
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-diagnostics-${{ github.sha }}
+          path: build-diagnostics.txt
+          if-no-files-found: warn
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
