@@ -30,7 +30,18 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build and Test
-        run: ./gradlew build --no-configuration-cache --stacktrace
+        id: build
+        run: |
+          set +e
+          ./gradlew build --no-configuration-cache --stacktrace --console=plain > build-output.log 2>&1
+          BUILD_EXIT=$?
+          set -e
+          cat build-output.log
+          if [ "$BUILD_EXIT" -ne 0 ]; then
+            ERRORS=$(grep -E 'error:|ERROR|FAILED' build-output.log | head -30)
+            echo "::error title=Build Failed::$(echo "$ERRORS" | tr '\n' ' | ')"
+            exit 1
+          fi
 
       - name: Upload Test Report
         if: failure()

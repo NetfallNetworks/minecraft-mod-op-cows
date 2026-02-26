@@ -27,7 +27,7 @@ public class ModSimpleTrigger extends SimpleCriterionTrigger<ModSimpleTrigger.In
     public record Instance(Optional<ContextAwarePredicate> player) implements SimpleInstance {
         public static final Codec<Instance> CODEC = RecordCodecBuilder.create(
                 i -> i.group(
-                        EntityPredicate.ADVANCEMENT_ENTITY_PREDICATE.optionalFieldOf("player").forGetter(Instance::player)
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(Instance::player)
                 ).apply(i, Instance::new)
         );
     }
