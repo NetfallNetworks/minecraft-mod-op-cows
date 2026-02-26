@@ -32,13 +32,13 @@ jobs:
       - name: Build and Test
         id: build
         run: |
-          ./gradlew clean build --no-configuration-cache --no-build-cache --stacktrace --console=plain > build-output.log 2>&1 || true
+          set +e
+          ./gradlew clean build --no-configuration-cache --no-build-cache --stacktrace --console=plain > build-output.log 2>&1
           BUILD_EXIT=$?
-          echo "build_exit=$BUILD_EXIT" >> "$GITHUB_OUTPUT"
+          set -e
           cat build-output.log
           if [ "$BUILD_EXIT" -ne 0 ]; then
-            # Extract and emit errors as annotations
-            ERRORS=$(tail -80 build-output.log | head -60)
+            ERRORS=$(grep -A2 'error:' build-output.log | head -40; echo '---'; tail -40 build-output.log)
             echo "::error title=Build Failed::$(echo "$ERRORS" | tr '\n' '%0A')"
             exit 1
           fi
