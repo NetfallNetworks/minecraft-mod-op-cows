@@ -767,19 +767,12 @@ git push origin --delete test/branch-protection
 ### Cutting a New Release
 
 ```bash
-# 1. Update version in gradle.properties
-#    mod_version=1.0.1
-
-# 2. Commit the version bump
-git add gradle.properties
-git commit -m "release: bump version to 1.0.1"
-
-# 3. Tag and push
+# Version comes from the git tag — no files to edit.
 git tag v1.0.1
 git push && git push origin v1.0.1
 ```
 
-The release workflow builds the JAR, runs tests, and publishes a GitHub Release automatically.
+The release workflow builds the JAR (versioned `1.21.11-1.0.1` from the tag), runs tests, and publishes a GitHub Release automatically.
 
 ### PR Workflow
 
@@ -822,19 +815,12 @@ gh pr create --title "feat: my feature" --body "Description"
 ### Cutting a New Release
 
 ```bash
-# 1. Update version in gradle.properties
-#    mod_version=1.0.1
-
-# 2. Commit the version bump
-git add gradle.properties
-git commit -m "release: bump version to 1.0.1"
-
-# 3. Tag and push
+# Version comes from the git tag — no files to edit.
 git tag v1.0.1
 git push && git push origin v1.0.1
 ```
 
-The release workflow builds the JAR, runs tests, and publishes a GitHub Release automatically.
+The release workflow builds the JAR (versioned `1.21.11-1.0.1` from the tag), runs tests, and publishes a GitHub Release automatically.
 
 ### PR Workflow
 
