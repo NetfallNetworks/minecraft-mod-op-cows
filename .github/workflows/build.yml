@@ -28,32 +28,36 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-        with:
-          cache-disabled: true
 
       - name: Build and Test
-        id: build
         run: |
-          ./gradlew clean --no-configuration-cache 2>/dev/null || true
-          ./gradlew build --no-configuration-cache --no-build-cache --rerun-tasks --stacktrace 2>&1 | tee build-output.log
+          set -x
+          ./gradlew clean build --no-configuration-cache --no-build-cache --stacktrace --console=plain
+          echo "=== Build exit code: $? ==="
+          echo "=== build/libs/ ==="
+          ls -la build/libs/ || echo "NO build/libs/ DIRECTORY"
+          echo "=== All JARs ==="
+          find build/ -name "*.jar" || echo "NO JARS"
 
-      - name: Retry Build and Test
-        if: failure() && steps.build.outcome == 'failure'
+      - name: Build diagnostics
+        if: always()
         run: |
-          ./gradlew clean --no-configuration-cache
-          ./gradlew build --no-configuration-cache --no-build-cache --stacktrace 2>&1 | tee retry-output.log
-
-      - name: Print Build Logs on Failure
-        if: failure()
-        run: |
-          echo "=== FIRST BUILD OUTPUT (last 100 lines) ==="
-          tail -100 build-output.log 2>/dev/null || true
-          echo ""
-          echo "=== RETRY BUILD OUTPUT (last 100 lines) ==="
-          tail -100 retry-output.log 2>/dev/null || true
-          echo ""
-          echo "=== TEST RESULT XML FILES ==="
-          find build/test-results -name "*.xml" -exec cat {} \; 2>/dev/null || true
+          {
+            echo "## Build Diagnostics"
+            echo '```'
+            echo "build/libs/:"
+            ls -la build/libs/ 2>/dev/null || echo "(does not exist)"
+            echo ""
+            echo "All JARs:"
+            find build/ -name "*.jar" 2>/dev/null || echo "(none)"
+            echo ""
+            echo "build/ top-level:"
+            ls build/ 2>/dev/null || echo "(empty)"
+            echo ""
+            echo "build/classes/:"
+            find build/classes -type f 2>/dev/null | head -10 || echo "(none)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload Test Report
         if: failure()
@@ -61,38 +65,6 @@ jobs:
         with:
           name: test-report-${{ github.sha }}
           path: build/reports/tests/
-
-      - name: Build diagnostics
-        if: always()
-        run: |
-          {
-            echo "## Build Diagnostics"
-            echo ""
-            echo "### build/libs/"
-            echo '```'
-            ls -la build/libs/ 2>/dev/null || echo "(directory does not exist)"
-            echo '```'
-            echo ""
-            echo "### Compiled classes"
-            echo '```'
-            find build/classes -type f 2>/dev/null | head -20 || echo "(no class files)"
-            echo '```'
-            echo ""
-            echo "### All JARs in build/"
-            echo '```'
-            find build/ -name "*.jar" 2>/dev/null || echo "(none found)"
-            echo '```'
-            echo ""
-            echo "### Build directory tree (depth 3)"
-            echo '```'
-            find build/ -maxdepth 3 -type f 2>/dev/null | head -60 || echo "(empty)"
-            echo '```'
-            echo ""
-            echo "### Build output (last 150 lines)"
-            echo '```'
-            tail -150 build-output.log 2>/dev/null || echo "(no build log)"
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
