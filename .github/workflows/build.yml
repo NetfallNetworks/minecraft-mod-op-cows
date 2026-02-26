@@ -62,33 +62,37 @@ jobs:
           name: test-report-${{ github.sha }}
           path: build/reports/tests/
 
-      - name: Collect diagnostics
+      - name: Build diagnostics
         if: always()
         run: |
           {
-            echo "=== build/libs/ ==="
+            echo "## Build Diagnostics"
+            echo ""
+            echo "### build/libs/"
+            echo '```'
             ls -la build/libs/ 2>/dev/null || echo "(directory does not exist)"
+            echo '```'
             echo ""
-            echo "=== build/classes/ ==="
-            find build/classes -type f 2>/dev/null | head -30 || echo "(no class files)"
+            echo "### Compiled classes"
+            echo '```'
+            find build/classes -type f 2>/dev/null | head -20 || echo "(no class files)"
+            echo '```'
             echo ""
-            echo "=== All JARs in build/ ==="
+            echo "### All JARs in build/"
+            echo '```'
             find build/ -name "*.jar" 2>/dev/null || echo "(none found)"
+            echo '```'
             echo ""
-            echo "=== Full build directory tree (depth 3) ==="
-            find build/ -maxdepth 3 -type f 2>/dev/null | head -80 || echo "(empty)"
+            echo "### Build directory tree (depth 3)"
+            echo '```'
+            find build/ -maxdepth 3 -type f 2>/dev/null | head -60 || echo "(empty)"
+            echo '```'
             echo ""
-            echo "=== Last 200 lines of build output ==="
-            tail -200 build-output.log 2>/dev/null || echo "(no build log)"
-          } > build-diagnostics.txt 2>&1
-
-      - name: Upload diagnostics
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-diagnostics-${{ github.sha }}
-          path: build-diagnostics.txt
-          if-no-files-found: warn
+            echo "### Build output (last 150 lines)"
+            echo '```'
+            tail -150 build-output.log 2>/dev/null || echo "(no build log)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
