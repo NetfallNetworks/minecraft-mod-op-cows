@@ -1,0 +1,32 @@
+{
+  "parent": "mooofdoom:doom_apple",
+  "display": {
+    "icon": { "id": "mooofdoom:bucket_of_luck", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.collect_all_buckets.title"},
+    "description": {"translate": "advancement.mooofdoom.collect_all_buckets.description"},
+    "frame": "challenge"
+  },
+  "criteria": {
+    "has_speed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "mooofdoom:bucket_of_speed" }] }
+    },
+    "has_regeneration": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "mooofdoom:bucket_of_regeneration" }] }
+    },
+    "has_strength": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "mooofdoom:bucket_of_strength" }] }
+    },
+    "has_fire_resistance": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "mooofdoom:bucket_of_fire_resistance" }] }
+    },
+    "has_luck": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "mooofdoom:bucket_of_luck" }] }
+    }
+  },
+  "rewards": { "experience": 150 }
+}

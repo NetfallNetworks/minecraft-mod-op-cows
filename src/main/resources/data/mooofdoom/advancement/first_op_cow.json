@@ -1,0 +1,15 @@
+{
+  "parent": "mooofdoom:doom_apple",
+  "display": {
+    "icon": { "id": "mooofdoom:doom_apple", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.first_op_cow.title"},
+    "description": {"translate": "advancement.mooofdoom.first_op_cow.description"},
+    "frame": "goal"
+  },
+  "criteria": {
+    "create_op_cow": {
+      "trigger": "mooofdoom:create_op_cow"
+    }
+  },
+  "rewards": { "experience": 50 }
+}

@@ -31,25 +31,17 @@ jobs:
 
       - name: Build and Test
         id: build
-        run: ./gradlew build --no-configuration-cache --stacktrace 2>&1 | tee build-output.log
-
-      - name: Retry Build and Test
-        if: failure() && steps.build.outcome == 'failure'
         run: |
-          ./gradlew clean --no-configuration-cache
-          ./gradlew build --no-configuration-cache --stacktrace 2>&1 | tee retry-output.log
-
-      - name: Print Build Logs on Failure
-        if: failure()
-        run: |
-          echo "=== FIRST BUILD OUTPUT (last 100 lines) ==="
-          tail -100 build-output.log 2>/dev/null || true
-          echo ""
-          echo "=== RETRY BUILD OUTPUT (last 100 lines) ==="
-          tail -100 retry-output.log 2>/dev/null || true
-          echo ""
-          echo "=== TEST RESULT XML FILES ==="
-          find build/test-results -name "*.xml" -exec cat {} \; 2>/dev/null || true
+          set +e
+          ./gradlew build --no-configuration-cache --stacktrace --console=plain > build-output.log 2>&1
+          BUILD_EXIT=$?
+          set -e
+          cat build-output.log
+          if [ "$BUILD_EXIT" -ne 0 ]; then
+            ERRORS=$(grep -E 'error:|ERROR|FAILED' build-output.log | head -30)
+            echo "::error title=Build Failed::$(echo "$ERRORS" | tr '\n' ' | ')"
+            exit 1
+          fi
 
       - name: Upload Test Report
         if: failure()

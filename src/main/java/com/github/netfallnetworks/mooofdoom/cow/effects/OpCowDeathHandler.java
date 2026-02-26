@@ -2,8 +2,10 @@ package com.github.netfallnetworks.mooofdoom.cow.effects;
 
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
 import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
+import com.github.netfallnetworks.mooofdoom.registry.ModCriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.animal.cow.Cow;
@@ -37,19 +39,22 @@ public class OpCowDeathHandler {
                 SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE,
                 4.0F, 0.7F);
 
-        // Cow death sound layered on top
+        // Cow death sound — louder and higher pitch so it's audible over the explosion
         serverLevel.playSound(null, cow.getX(), cow.getY(), cow.getZ(),
                 SoundEvents.COW_DEATH, SoundSource.HOSTILE,
-                3.0F, 0.5F);
+                4.0F, 0.8F);
 
         // Totem sound for the dramatic flair
         serverLevel.playSound(null, cow.getX(), cow.getY(), cow.getZ(),
                 SoundEvents.TOTEM_USE, SoundSource.HOSTILE,
                 3.0F, 1.0F);
 
-        // Trigger rebellion on the killer
+        // Trigger rebellion on the killer and grant kill advancement
         if (event.getSource().getEntity() instanceof Player killer) {
             RebellionHandler.applyRebellion(killer);
+            if (killer instanceof ServerPlayer serverPlayer) {
+                ModCriteriaTriggers.KILL_OP_COW.get().trigger(serverPlayer);
+            }
             MooOfDoom.LOGGER.info("OP cow killed by {}! Rebellion triggered.",
                     killer.getName().getString());
         }

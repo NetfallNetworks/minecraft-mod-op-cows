@@ -1,0 +1,15 @@
+{
+  "parent": "mooofdoom:first_op_cow",
+  "display": {
+    "icon": { "id": "minecraft:wheat", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.guardian.title"},
+    "description": {"translate": "advancement.mooofdoom.guardian.description"},
+    "frame": "task"
+  },
+  "criteria": {
+    "get_guardian": {
+      "trigger": "mooofdoom:get_guardian"
+    }
+  },
+  "rewards": { "experience": 20 }
+}

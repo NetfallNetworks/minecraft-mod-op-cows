@@ -1,0 +1,15 @@
+{
+  "parent": "mooofdoom:first_op_cow",
+  "display": {
+    "icon": { "id": "minecraft:iron_sword", "count": 1 },
+    "title": {"translate": "advancement.mooofdoom.rebellion.title"},
+    "description": {"translate": "advancement.mooofdoom.rebellion.description"},
+    "frame": "task"
+  },
+  "criteria": {
+    "get_rebellion": {
+      "trigger": "mooofdoom:get_rebellion"
+    }
+  },
+  "rewards": { "experience": 20 }
+}

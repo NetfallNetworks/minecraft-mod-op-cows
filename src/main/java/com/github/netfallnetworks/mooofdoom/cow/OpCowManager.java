@@ -17,6 +17,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 public class OpCowManager {
 
     public static final String OP_TAG = "MooOfDoom";
+    private static boolean loggedActivationMode = false;
 
     public static boolean isOpCow(Cow cow) {
         return cow.getTags().contains(OP_TAG);
@@ -70,6 +71,18 @@ public class OpCowManager {
         Entity entity = event.getEntity();
         if (!(entity instanceof Cow cow)) return;
         if (event.getLevel().isClientSide()) return;
+
+        // Log the activation mode once for diagnostics (helps catch stale config files)
+        if (!loggedActivationMode) {
+            loggedActivationMode = true;
+            ModConfig.ActivationMode mode = ModConfig.ACTIVATION_MODE.get();
+            MooOfDoom.LOGGER.info("[Moo of Doom] Activation mode: {}. If this is unexpected, delete " +
+                    "config/mooofdoom-common.toml to regenerate with current defaults.", mode);
+            if (mode == ModConfig.ActivationMode.ALL_COWS) {
+                MooOfDoom.LOGGER.warn("[Moo of Doom] ALL_COWS mode is active — every cow will become OP! " +
+                        "Set mode = \"ITEM_ACTIVATED\" in mooofdoom-common.toml for normal gameplay.");
+            }
+        }
 
         // If already OP, re-apply attributes (they reset on load)
         if (isOpCow(cow)) {

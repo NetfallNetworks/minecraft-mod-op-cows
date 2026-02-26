@@ -3,7 +3,9 @@ package com.github.netfallnetworks.mooofdoom.cow.effects;
 import com.github.netfallnetworks.mooofdoom.ModConfig;
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
 import com.github.netfallnetworks.mooofdoom.cow.OpCowManager;
+import com.github.netfallnetworks.mooofdoom.registry.ModCriteriaTriggers;
 import com.github.netfallnetworks.mooofdoom.registry.ModEffects;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -37,6 +39,11 @@ public class GuardianHandler {
         int duration = ModConfig.GUARDIAN_DURATION_TICKS.getAsInt();
         player.addEffect(new MobEffectInstance(ModEffects.GUARDIAN, duration, 0, false, true, true));
         MooOfDoom.LOGGER.debug("Applied Guardian to player {}", player.getName().getString());
+
+        // Advancement: got guardian
+        if (player instanceof ServerPlayer serverPlayer) {
+            ModCriteriaTriggers.GET_GUARDIAN.get().trigger(serverPlayer);
+        }
     }
 
     /**

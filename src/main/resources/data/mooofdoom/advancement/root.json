@@ -3,6 +3,7 @@
     "icon": { "id": "mooofdoom:doom_apple", "count": 1 },
     "title": {"translate": "advancement.mooofdoom.root.title"},
     "description": {"translate": "advancement.mooofdoom.root.description"},
+    "background": "minecraft:textures/block/hay_block_side.png",
     "show_toast": false,
     "announce_to_chat": false
   },

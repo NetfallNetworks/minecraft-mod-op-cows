@@ -1,8 +1,10 @@
 package com.github.netfallnetworks.mooofdoom.cow;
 
 import com.github.netfallnetworks.mooofdoom.MooOfDoom;
+import com.github.netfallnetworks.mooofdoom.registry.ModCriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -45,6 +47,11 @@ public class CowMorphHandler {
                 player.getX(), player.getY() + 1, player.getZ(),
                 50, 0.5, 1.0, 0.5, 0.2);
         player.playSound(SoundEvents.TOTEM_USE, 1.0F, 1.0F);
+
+        // Advancement: mythic cow morph
+        if (player instanceof ServerPlayer serverPlayer) {
+            ModCriteriaTriggers.COW_MORPH.get().trigger(serverPlayer);
+        }
 
         MooOfDoom.LOGGER.info("Player {} morphed into a cow!", player.getName().getString());
     }
