@@ -1985,7 +1985,7 @@ Verify: Check `build/libs/mooofdoom-1.0.0.jar` exists
 **Step 2: Push to GitHub**
 
 ```bash
-git remote add origin https://github.com/NetfallNetworks/mod-op-cows.git
+git remote add origin https://github.com/NetfallNetworks/moo-of-doom.git
 git branch -M main
 git push -u origin main
 ```

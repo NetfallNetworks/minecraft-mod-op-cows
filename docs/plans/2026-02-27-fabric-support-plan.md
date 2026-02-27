@@ -416,7 +416,7 @@ When Fabric is added later, both workflows get a `matrix.loader` strategy.
 ## Final Project Structure (This Phase)
 
 ```
-minecraft-mod-op-cows/
+moo-of-doom/
 ├── settings.gradle                      (includes common, neoforge)
 ├── build.gradle                         (architectury plugin, shared config)
 ├── gradle.properties                    (+ architectury_version)
