@@ -12,24 +12,24 @@ class MoocowMultiplierTest {
 
     @Test
     void oneHitKillGivesMaxMultiplier() {
-        assertEquals(10, CombatLootHandler.calculateMultiplier(1, 10));
+        assertEquals(10, MoocowMultiplier.calculate(1, 10));
     }
 
     @Test
     void tenHitsGivesMinMultiplier() {
-        assertEquals(1, CombatLootHandler.calculateMultiplier(10, 10));
+        assertEquals(1, MoocowMultiplier.calculate(10, 10));
     }
 
     @Test
     void moreThanTenHitsStillGivesOne() {
-        assertEquals(1, CombatLootHandler.calculateMultiplier(15, 10));
-        assertEquals(1, CombatLootHandler.calculateMultiplier(100, 10));
+        assertEquals(1, MoocowMultiplier.calculate(15, 10));
+        assertEquals(1, MoocowMultiplier.calculate(100, 10));
     }
 
     @Test
     void zeroHitsTreatedAsOneHit() {
         // Edge case: if somehow hits = 0, should still give max
-        assertEquals(10, CombatLootHandler.calculateMultiplier(0, 10));
+        assertEquals(10, MoocowMultiplier.calculate(0, 10));
     }
 
     @ParameterizedTest
@@ -46,7 +46,7 @@ class MoocowMultiplierTest {
             "10, 10, 1"
     })
     void linearInterpolationWithDefault10(int hits, int moocow, int expected) {
-        assertEquals(expected, CombatLootHandler.calculateMultiplier(hits, moocow),
+        assertEquals(expected, MoocowMultiplier.calculate(hits, moocow),
                 "hits=" + hits + " moocow=" + moocow);
     }
 
@@ -57,7 +57,7 @@ class MoocowMultiplierTest {
             "10, 20, 1"
     })
     void worksWithCustomMultiplier(int hits, int moocow, int expected) {
-        assertEquals(expected, CombatLootHandler.calculateMultiplier(hits, moocow),
+        assertEquals(expected, MoocowMultiplier.calculate(hits, moocow),
                 "hits=" + hits + " moocow=" + moocow);
     }
 
@@ -65,7 +65,7 @@ class MoocowMultiplierTest {
     void multiplierAlwaysAtLeastOne() {
         for (int hits = 1; hits <= 20; hits++) {
             for (int moocow = 1; moocow <= 100; moocow++) {
-                int result = CombatLootHandler.calculateMultiplier(hits, moocow);
+                int result = MoocowMultiplier.calculate(hits, moocow);
                 assertTrue(result >= 1,
                         "Multiplier must be >= 1, got " + result + " for hits=" + hits + " moocow=" + moocow);
             }
@@ -76,7 +76,7 @@ class MoocowMultiplierTest {
     void multiplierNeverExceedsMax() {
         for (int hits = 1; hits <= 20; hits++) {
             int moocow = 10;
-            int result = CombatLootHandler.calculateMultiplier(hits, moocow);
+            int result = MoocowMultiplier.calculate(hits, moocow);
             assertTrue(result <= moocow,
                     "Multiplier must be <= moocow, got " + result + " for hits=" + hits);
         }
@@ -85,9 +85,9 @@ class MoocowMultiplierTest {
     @Test
     void multiplierDecreasesMonotonicallyWithHits() {
         int moocow = 10;
-        int prev = CombatLootHandler.calculateMultiplier(1, moocow);
+        int prev = MoocowMultiplier.calculate(1, moocow);
         for (int hits = 2; hits <= 10; hits++) {
-            int current = CombatLootHandler.calculateMultiplier(hits, moocow);
+            int current = MoocowMultiplier.calculate(hits, moocow);
             assertTrue(current <= prev,
                     "Multiplier should decrease: hits=" + hits + " gave " + current + " > prev " + prev);
             prev = current;
