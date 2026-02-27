@@ -48,11 +48,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-report-${{ github.sha }}
-          path: build/reports/tests/
+          path: |
+            common/build/reports/tests/
+            neoforge/build/reports/tests/
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
           name: mooofdoom-${{ github.sha }}
-          path: build/libs/*.jar
+          path: neoforge/build/libs/*.jar
           if-no-files-found: error
