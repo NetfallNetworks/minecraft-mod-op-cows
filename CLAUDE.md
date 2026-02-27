@@ -40,3 +40,8 @@ when pushing and monitor the CI build immediately after.
 - Mod ID: `mooofdoom`
 - Version: derived from git tags (`v*.*.*`), falls back to `gradle.properties`
 - Tests must be deterministic — always seed `Random` instances
+
+## Plan Documents
+
+Plan documents live in `docs/plans/` and follow the format described in
+`docs/plans/CONVENTIONS.md`. Read that file before writing or modifying plans.
