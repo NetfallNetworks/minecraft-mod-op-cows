@@ -28,15 +28,21 @@ import net.minecraft.world.level.Level;
 public class DoomAppleUseHandler {
 
 
-    public static void onPlayerInteractEntity(Player player, Entity target, InteractionHand hand, Level level) {
-        if (level.isClientSide()) return;
-        if (!player.getItemInHand(hand).is(ModItems.DOOM_APPLE.get())) return;
+    /**
+     * @return true if the interaction was handled and the event should be canceled
+     */
+    public static boolean onPlayerInteractEntity(Player player, Entity target, InteractionHand hand, Level level) {
+        if (level.isClientSide()) return false;
+        if (!player.getItemInHand(hand).is(ModItems.DOOM_APPLE.get())) return false;
 
         if (target instanceof Cow cow) {
             handleCowFeed(player, hand, cow);
+            return true;
         } else if (target instanceof Monster monster) {
             handleHostileFeed(player, hand, monster);
+            return true;
         }
+        return false;
     }
 
     private static void handleCowFeed(Player player, InteractionHand hand, Cow cow) {

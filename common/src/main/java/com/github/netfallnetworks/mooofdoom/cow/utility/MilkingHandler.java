@@ -20,17 +20,20 @@ import net.minecraft.world.level.Level;
 public class MilkingHandler {
 
 
-    public static void onPlayerInteractEntity(Player player, Entity target, InteractionHand hand, Level level) {
-        if (level.isClientSide()) return;
-        if (!ModConfigValues.enchantedMilkEnabled) return;
-        if (!(target instanceof Cow cow)) return;
-        if (!player.getItemInHand(hand).is(Items.BUCKET)) return;
+    /**
+     * @return true if the interaction was handled and the event should be canceled
+     */
+    public static boolean onPlayerInteractEntity(Player player, Entity target, InteractionHand hand, Level level) {
+        if (level.isClientSide()) return false;
+        if (!ModConfigValues.enchantedMilkEnabled) return false;
+        if (!(target instanceof Cow cow)) return false;
+        if (!player.getItemInHand(hand).is(Items.BUCKET)) return false;
 
         // Check if this is an OP cow or a companion cow (morphed player)
         boolean isOpCow = OpCowManager.isOpCow(cow);
         boolean isCompanionCow = cow.getTags().contains("MooOfDoom_Companion");
 
-        if (!isOpCow && !isCompanionCow) return;
+        if (!isOpCow && !isCompanionCow) return false;
 
         // Replace normal milking with tiered buff bucket
         Item bucketItem = rollBuffBucket(cow);
@@ -47,6 +50,7 @@ public class MilkingHandler {
                     cow.getX(), cow.getY() + 1, cow.getZ(),
                     10, 0.3, 0.3, 0.3, 0.1);
         }
+        return true;
     }
 
     private static Item rollBuffBucket(Cow cow) {

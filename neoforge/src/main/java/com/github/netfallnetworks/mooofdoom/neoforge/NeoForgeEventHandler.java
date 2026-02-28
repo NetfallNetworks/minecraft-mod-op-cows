@@ -61,8 +61,14 @@ public class NeoForgeEventHandler {
         var hand = event.getHand();
         var level = event.getLevel();
 
-        DoomAppleUseHandler.onPlayerInteractEntity(player, target, hand, level);
-        MilkingHandler.onPlayerInteractEntity(player, target, hand, level);
+        if (DoomAppleUseHandler.onPlayerInteractEntity(player, target, hand, level)) {
+            event.setCanceled(true);
+            return;
+        }
+        if (MilkingHandler.onPlayerInteractEntity(player, target, hand, level)) {
+            event.setCanceled(true);
+            return;
+        }
         GuardianHandler.onFeedCow(player, target, hand, level);
     }
 
