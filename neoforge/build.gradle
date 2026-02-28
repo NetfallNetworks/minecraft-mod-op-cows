@@ -57,9 +57,12 @@ dependencies {
     implementation project(':common')
 }
 
-// Include common module classes and resources in the neoforge JAR
+// Include common module's resources in neoforge's resource processing pipeline
+sourceSets.main.resources.srcDir project(':common').file('src/main/resources')
+
+// Include common module's compiled classes in the neoforge JAR
 tasks.named('jar', Jar) {
-    from(project(':common').sourceSets.main.output)
+    from(project(':common').sourceSets.main.output.classesDirs)
 }
 
 // Template expansion for neoforge.mods.toml
