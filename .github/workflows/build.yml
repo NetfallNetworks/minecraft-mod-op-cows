@@ -6,6 +6,14 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    paths:
+      - '**.java'
+      - '**.gradle'
+      - 'gradle.properties'
+      - 'gradle/**'
+      - 'settings.gradle'
+      - 'src/**'
+      - '**/src/**'
 
 jobs:
   build:
