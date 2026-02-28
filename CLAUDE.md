@@ -26,23 +26,23 @@ scripts/sandbox-build.sh build --info     # any Gradle args
 This starts a local proxy relay (`scripts/proxy_relay.py`) that injects
 the `Proxy-Authorization` header, then runs Gradle through it.
 
-**Known limitation:** the sandbox egress allowlist may not include all
-Mojang CDN domains (e.g. `piston-meta.mojang.com`), so builds may still
-fail with HTTP 403 on artifact downloads. Track upstream progress at
-https://github.com/anthropics/claude-code/issues/11897. If this happens,
-rely on CI to validate the build after pushing.
-
 ## Pre-Push Checklist
 
 **IMPORTANT: Always run the full build locally before every push.**
+
+In the sandbox, use the proxy relay wrapper:
+
+```bash
+scripts/sandbox-build.sh
+```
+
+Outside the sandbox, use Gradle directly:
 
 ```bash
 ./gradlew build --no-configuration-cache
 ```
 
 Do NOT push if the build fails. Fix all compilation errors and test failures first.
-If the build cannot run locally (e.g. network restrictions), note this explicitly
-when pushing and monitor the CI build immediately after.
 
 ## CI Workflows
 
