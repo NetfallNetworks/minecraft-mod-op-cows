@@ -2,8 +2,11 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+// Vanilla mode: use NeoForm (deobfuscated Minecraft) instead of full NeoForge.
+// This avoids generating NeoForge mod-loader metadata that would conflict with
+// the neoforge module's own metadata when packaged into the final JAR.
 neoForge {
-    version = rootProject.neo_version
+    neoFormVersion = rootProject.neoform_version
 
     parchment {
         mappingsVersion = rootProject.parchment_mappings_version
@@ -12,6 +15,10 @@ neoForge {
 }
 
 dependencies {
+    // NeoForge API (DeferredRegister, DeferredItem, etc.) at compile time only.
+    // At runtime the neoforge module provides these classes.
+    compileOnly "net.neoforged:neoforge:${rootProject.neo_version}"
+
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
