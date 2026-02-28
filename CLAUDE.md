@@ -11,6 +11,27 @@ Moo of Doom — a NeoForge 1.21.11 Minecraft mod that makes cows absurdly overpo
 - **Java**: 21 (required)
 - **Gradle**: 9.2.1 (via wrapper)
 
+### Claude Code Web (Sandbox) Builds
+
+The sandbox proxy requires authentication that Java's `HttpClient` can't
+provide automatically, causing NeoForm artifact downloads to fail with
+HTTP 407. Use the proxy relay wrapper instead:
+
+```bash
+scripts/sandbox-build.sh                  # full build
+scripts/sandbox-build.sh test             # tests only
+scripts/sandbox-build.sh build --info     # any Gradle args
+```
+
+This starts a local proxy relay (`scripts/proxy_relay.py`) that injects
+the `Proxy-Authorization` header, then runs Gradle through it.
+
+**Known limitation:** the sandbox egress allowlist may not include all
+Mojang CDN domains (e.g. `piston-meta.mojang.com`), so builds may still
+fail with HTTP 403 on artifact downloads. Track upstream progress at
+https://github.com/anthropics/claude-code/issues/11897. If this happens,
+rely on CI to validate the build after pushing.
+
 ## Pre-Push Checklist
 
 **IMPORTANT: Always run the full build locally before every push.**
@@ -34,6 +55,7 @@ when pushing and monitor the CI build immediately after.
 - `src/test/java/` — unit tests (JUnit 5)
 - `src/main/templates/META-INF/neoforge.mods.toml` — mod metadata template
 - `gradle.properties` — version numbers, mod metadata
+- `scripts/` — build utilities (proxy relay for sandbox environments)
 
 ## Conventions
 
