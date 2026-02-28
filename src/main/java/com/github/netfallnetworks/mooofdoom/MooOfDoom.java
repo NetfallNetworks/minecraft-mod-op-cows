@@ -2,9 +2,12 @@ package com.github.netfallnetworks.mooofdoom;
 
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import com.github.netfallnetworks.mooofdoom.cow.CowMorphHandler;
 import com.github.netfallnetworks.mooofdoom.cow.DoomAppleUseHandler;
 import com.github.netfallnetworks.mooofdoom.cow.MobConversionHandler;
@@ -42,6 +45,9 @@ public class MooOfDoom {
         // Register mod configuration
         modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
 
+        // Add ATTACK_DAMAGE attribute to cows so MeleeAttackGoal doesn't crash
+        modEventBus.addListener(MooOfDoom::onAttributeModify);
+
         // Register game event handlers
         NeoForge.EVENT_BUS.register(OpCowManager.class);
         NeoForge.EVENT_BUS.register(DoomAppleUseHandler.class);
@@ -65,5 +71,11 @@ public class MooOfDoom {
         // Doom Apple conversion handlers
         NeoForge.EVENT_BUS.register(CowMorphHandler.class);
         NeoForge.EVENT_BUS.register(MobConversionHandler.class);
+    }
+
+    private static void onAttributeModify(EntityAttributeModificationEvent event) {
+        if (!event.has(EntityType.COW, Attributes.ATTACK_DAMAGE)) {
+            event.add(EntityType.COW, Attributes.ATTACK_DAMAGE);
+        }
     }
 }
