@@ -5,11 +5,14 @@ import com.github.netfallnetworks.mooofdoom.registry.ModCriteriaTriggers;
 import com.github.netfallnetworks.mooofdoom.registry.ModEffects;
 import com.github.netfallnetworks.mooofdoom.registry.ModEntityTypes;
 import com.github.netfallnetworks.mooofdoom.registry.ModItems;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 
 @Mod(MooOfDoom.MODID)
 public class NeoForgeMooOfDoom {
@@ -23,6 +26,9 @@ public class NeoForgeMooOfDoom {
         ModEffects.MOB_EFFECTS.register(modEventBus);
         ModCriteriaTriggers.TRIGGERS.register(modEventBus);
 
+        // Add ATTACK_DAMAGE attribute to cows so MeleeAttackGoal doesn't crash
+        modEventBus.addListener(NeoForgeMooOfDoom::onAttributeModify);
+
         // Register mod configuration and sync on load/reload
         modContainer.registerConfig(ModConfig.Type.COMMON, NeoForgeConfig.SPEC);
         modEventBus.addListener(this::onConfigLoad);
@@ -35,5 +41,11 @@ public class NeoForgeMooOfDoom {
 
     private void onConfigReload(ModConfigEvent.Reloading event) {
         NeoForgeConfig.syncToCommon();
+    }
+
+    private static void onAttributeModify(EntityAttributeModificationEvent event) {
+        if (!event.has(EntityType.COW, Attributes.ATTACK_DAMAGE)) {
+            event.add(EntityType.COW, Attributes.ATTACK_DAMAGE);
+        }
     }
 }
