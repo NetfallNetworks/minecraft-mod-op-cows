@@ -55,14 +55,13 @@ neoForge {
 
 dependencies {
     implementation project(':common')
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-testing {
-    suites {
-        test {
-            useJUnitJupiter('5.11.0')
-        }
-    }
+test {
+    useJUnitPlatform()
 }
 
 // Include common module's compiled classes and source resources in the neoforge JAR.
